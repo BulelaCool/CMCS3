@@ -1,0 +1,38 @@
+﻿@model IEnumerable<CMCS3.Models.Claim>
+
+<div class="dashboard">
+    <h2>Lecturer Dashboard</h2>
+
+    <div class="summary">
+        <h3>Summary</h3>
+        <p>Total Claims: @Model.Count()</p>
+        <p>Pending Claims: @Model.Count(c => c.Status == "Pending")</p>
+        <p>Approved Claims: @Model.Count(c => c.Status == "Approved")</p>
+        <p>Rejected Claims: @Model.Count(c => c.Status == "Rejected")</p>
+    </div>
+
+    <div class="recent-claims">
+        <h3>Recent Claims</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Date Submitted</th>
+                    <th>Status</th>
+                    <th>Total Amount</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var claim in Model.Take(5))
+                {
+                    <tr>
+                        <td>@claim.DateSubmitted.ToShortDateString()</td>
+                        <td>@claim.Status</td>
+                        <td>@claim.TotalAmount</td>
+                        <td><a href="/Home/ViewClaims">View Details</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
